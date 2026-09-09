@@ -1,0 +1,56 @@
+body{
+display: flex;
+width: 100vw;
+height: 100vh;
+margin: 0;
+}
+
+
+div.sidebar{
+display: inline;
+width: 150px;
+height: 100%;
+background-color: blue;
+flex-shrink: 0;
+}
+div.sidebarHeader{
+
+}
+div.sidebarElement{
+display: flex;
+align-items: center;
+justify-content: center;
+height: 10%;
+background-color: cyan;
+}
+div.sidebarElementBuffer{
+height: 1%;
+min-height: 20px;
+}
+a.sidebar{
+font-size: 20px;
+color: black;
+}
+a.sidebar:link{
+text-decoration:none;
+}
+a.sidebar:visited{
+text-decoration:none;
+}
+
+div.sidebarBuffer{
+width: 10px;
+background-color: red;
+}
+
+
+div.main{
+display: inline;
+height:100%;
+background-color: green;
+flex-grow: 1;
+}
+div.header{
+height: 15%;
+background-color: lime;
+}

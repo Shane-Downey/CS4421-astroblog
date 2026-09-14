@@ -13,8 +13,8 @@ Welcome to my second blog post, where I will tell what I had for breakfast today
 
 ## What I had for Breakfast
 
-1. **A glass of water with Vitamin C
-2. **2 boiled eggs
+1. **A glass of water with Vitamin C**
+2. **2 boiled eggs**
 
 ## What's next
 

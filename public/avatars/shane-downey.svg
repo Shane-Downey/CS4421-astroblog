@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">Shane Downey avatar</title>
+  <desc id="desc">An illustrated portrait with dark hair and glasses.</desc>
+  <rect width="160" height="160" rx="80" fill="#d6e2dc"/>
+  <circle cx="80" cy="76" r="43" fill="#f0b88b"/>
+  <path d="M39 75c0-36 17-56 43-56 28 0 42 23 39 58-11-8-20-18-25-31-14 15-32 24-57 29Z" fill="#3b3535"/>
+  <path d="M54 78h20v14H54zM86 78h20v14H86z" fill="none" stroke="#2d3435" stroke-width="5"/>
+  <path d="M74 85h12" stroke="#2d3435" stroke-width="4"/>
+  <circle cx="64" cy="85" r="3" fill="#2d3435"/>
+  <circle cx="96" cy="85" r="3" fill="#2d3435"/>
+  <path d="M68 106c8 6 16 6 24 0" fill="none" stroke="#8c4e45" stroke-width="4" stroke-linecap="round"/>
+  <path d="M34 160c3-31 21-47 46-47s43 16 46 47" fill="#8e5f50"/>
+</svg>

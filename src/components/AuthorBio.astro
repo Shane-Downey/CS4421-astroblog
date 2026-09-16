@@ -1,0 +1,101 @@
+---
+interface SocialLink {
+  label: string;
+  url: string;
+}
+
+interface Props {
+  profile: {
+    name: string;
+    bio: string;
+    avatar: string;
+    socialLinks: SocialLink[];
+  };
+}
+
+const { profile } = Astro.props;
+---
+
+<aside class="author-bio" aria-labelledby="author-heading">
+  <img class="author-avatar" src={profile.avatar} alt={`Portrait of ${profile.name}`} />
+  <div class="author-details">
+    <p class="author-kicker">Written by</p>
+    <h2 id="author-heading">{profile.name}</h2>
+    <p>{profile.bio}</p>
+    <nav aria-label={`${profile.name}'s social links`}>
+      <ul class="social-links">
+        {profile.socialLinks.map((link) => (
+          <li><a href={link.url} target="_blank" rel="noreferrer">{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+<style>
+  .author-bio {
+    align-items: center;
+    border-top: 1px solid #d8d1c5;
+    display: flex;
+    gap: 1.25rem;
+    margin: 3rem auto 1rem;
+    max-width: 46rem;
+    padding-top: 1.5rem;
+  }
+
+  .author-avatar {
+    background: #e8e1d6;
+    border: 3px solid #fffaf2;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #c8bdae;
+    flex: 0 0 5.5rem;
+    height: 5.5rem;
+    object-fit: cover;
+    width: 5.5rem;
+  }
+
+  .author-details {
+    flex: 1;
+  }
+
+  .author-kicker {
+    color: #756d62;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.25rem;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    color: #29251f;
+    font-family: Georgia, serif;
+    font-size: 1.35rem;
+    margin: 0;
+  }
+
+  .author-details > p:not(.author-kicker) {
+    color: #514a42;
+    line-height: 1.6;
+    margin: 0.45rem 0 0.75rem;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .social-links a {
+    color: #9a422f;
+    font-weight: 700;
+  }
+
+  @media (max-width: 30rem) {
+    .author-bio {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

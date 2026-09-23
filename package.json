@@ -10,11 +10,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test:unit": "vitest"
   },
   "dependencies": {
     "astro": "^7.3.2",
-    "jiti": "^2.7.0"
+    "jiti": "^2.7.0",
+    "vitest": "^5.0.1"
   },
   "allowScripts": {
     "esbuild": true

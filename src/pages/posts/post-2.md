@@ -1,4 +1,5 @@
 ---
+layout: '../../layouts/BlogPost.astro'
 title: 'My Second Blog Post'
 pubDate: 2026-09-14
 description: 'This is the second post of my new Astro blog.'
@@ -16,6 +17,6 @@ Welcome to my second blog post, where I will tell what I had for breakfast today
 1. **A glass of water with Vitamin C**
 2. **2 boiled eggs**
 
-## What's next
+## Whats next
 
-I'll probably have lunch at some point, maybe a snack in between.
+Ill probably have lunch at some point, maybe a snack in between.

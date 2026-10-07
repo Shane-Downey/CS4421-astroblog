@@ -13,15 +13,46 @@ export class CdkStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
+    const rewriteFunction = new cloudfront.Function(this, 'RewriteIndexFunction', {
+      code: cloudfront.FunctionCode.fromInline(`
+        function handler(event) {
+            var request = event.request;
+            var uri = request.uri;
+            if (uri.endsWith('/')) {
+            uri += 'index.html';
+            } else if (!uri.includes('.')) {
+            uri += '/index.html';
+            }
+          if (uri !== request.uri) {
+            return {
+              statusCode: 302,
+              statusDescription: 'Found',
+              headers: {
+                location: { value: uri },
+                'cache-control': { value: 'no-store' },
+              },
+            };
+          }
+          return request;
+        }
+      `),
+      runtime: cloudfront.FunctionRuntime.JS_2_0,
+    });
     const distribution = new cloudfront.Distribution(this, 'SiteDistribution', {
-      defaultBehavior: { origin: origins.S3BucketOrigin.withOriginAccessControl(siteBucket) },
+      defaultBehavior: {
+        origin: origins.S3BucketOrigin.withOriginAccessControl(siteBucket),
+        functionAssociations: [{
+          function: rewriteFunction,
+          eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+        }],
+      },
       defaultRootObject: 'index.html',
     });
     new s3deploy.BucketDeployment(this, 'DeploySite', {
       sources: [s3deploy.Source.asset('../dist')],
       destinationBucket: siteBucket,
       distribution,
-      distributionPaths: ['/*'], // Automatic CloudFront CDN cache invalidation!
+      distributionPaths: ['/*', '/posts/*'], // Invalidate stale post URLs after the rewrite change.
     });
   }
 }

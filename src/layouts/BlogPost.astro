@@ -8,7 +8,7 @@ const authors = await getCollection('authors');
 const authorProfile = authors.find(({ data }) => data.name === frontmatter.author);
 ---
 
-<SiteLayout title={frontmatter.title} description={frontmatter.description}>
+<SiteLayout title={frontmatter.title} description={frontmatter.description} backHref="/blog/" backLabel="Back to blog">
   <article>
     <slot />
     {authorProfile && <AuthorBio profile={authorProfile.data} />}

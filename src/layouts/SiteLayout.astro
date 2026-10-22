@@ -4,10 +4,11 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
-  current?: 'home' | 'about' | 'blog';
+  backHref?: string;
+  backLabel?: string;
 }
 
-const { title, description = 'Shane Downey’s blog.', current } = Astro.props;
+const { title, description = 'Shane Downey’s blog.', backHref, backLabel } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,11 +20,32 @@ const { title, description = 'Shane Downey’s blog.', current } = Astro.props;
     <title>{title} | Shane Downey</title>
   </head>
   <body>
-    <div aria-label="Main navigation" style="display:flex; justify-content:space-evenly">
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/blog/">Blog</a>
-    </div>
+    {backHref && backLabel && <a class="back-link" href={backHref}>{backLabel}</a>}
     <main><slot /></main>
   </body>
 </html>
+
+<style>
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    margin: 1rem 0 0 1rem;
+    padding: 0 0.9rem;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    background: color-mix(in srgb, currentColor 6%, transparent);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 150ms ease;
+  }
+
+  .back-link:hover {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+  }
+
+  .back-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+</style>

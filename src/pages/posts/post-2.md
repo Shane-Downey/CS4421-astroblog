@@ -5,7 +5,6 @@ pubDate: 2026-09-14
 description: 'This is the second post of my new Astro blog.'
 author: 'Shane Downey'
 ---
-[Return to Blog Posts](/../blog/)
 # My Second Blog Post
 
 Published on: 2026-09-14

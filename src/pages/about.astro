@@ -1,13 +1,84 @@
-<div style="display:flex; justify-content:space-evenly;">
-  <a href="/">Home</a>
-  <a href="/about/">About</a>
-  <a href="/blog/">Blog</a>
-</div>
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
 
-<body>
+<SiteLayout title="About" description="A little about Shane Downey and this blog." backHref="/" backLabel="Back to main">
   <h1>My About Page</h1>
-
   <p>
-  My name is Shane Downey, first year student in Immersive Software Engineering at University of Limerick.<br>
+    My name is Shane Downey, first year student in Immersive Software Engineering at University of Limerick.<br>
   </p>
-</body>
+  <div class="link-grid">
+    <section class="link-section" aria-labelledby="my-links-heading">
+      <h2 id="my-links-heading">My Links</h2>
+      <div class="link-buttons">
+        <a href="https://github.com/Shane-Downey">GitHub</a>
+        <a href="linkedin.com/shane-downey">LinkedIn</a>
+        <a href="https://steamcommunity.com/profiles/76561199459488777/">Steam</a>
+        <a href="instagram.com/shane.d3714">Instagram</a>
+        <a href="mailto:shanedowneythefirst@gmail.com">Contact</a>
+      </div>
+    </section>
+    <section class="link-section" aria-labelledby="bookmarks-heading">
+      <h2 id="bookmarks-heading">Bookmarks/Tools</h2>
+      <div class="link-buttons">
+        <a href="https://www.w3schools.com/java/default.asp">W3 Schools</a>
+        <a href="beej.us/guide/bgc/html/split/index.html">BeeJ's C</a>
+        <a href="http://localhost:4321/about/">LocalHost 4321</a>
+        <a href="https://learn.ul.ie/d2l/home">BrightSpace</a>
+        <a href="https://r74n.com/mini/protocog">ProtoCog</a>
+      </div>
+    </section>
+  </div>
+</SiteLayout>
+
+<style>
+  .link-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    max-width: 56rem;
+    margin: 2rem auto;
+    text-align: left;
+  }
+
+  .link-section {
+    border: 1px solid currentColor;
+    padding: 1.5rem;
+  }
+
+  .link-section h2 {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .link-buttons {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .link-section a {
+    display: block;
+    padding: 0.75rem 1rem;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    background: color-mix(in srgb, currentColor 6%, transparent);
+    text-decoration: none;
+    transition: background-color 150ms ease, transform 150ms ease;
+  }
+
+  .link-section a:hover {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+    transform: translateX(3px);
+  }
+
+  .link-section a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 36rem) {
+    .link-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

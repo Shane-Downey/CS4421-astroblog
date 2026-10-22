@@ -1,13 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
 import AuthorBio from '../components/AuthorBio.astro';
+import SiteLayout from './SiteLayout.astro';
 
 const { frontmatter } = Astro.props;
 const authors = await getCollection('authors');
 const authorProfile = authors.find(({ data }) => data.name === frontmatter.author);
 ---
 
-<article>
-  <slot />
-  {authorProfile && <AuthorBio profile={authorProfile.data} />}
-</article>
+<SiteLayout title={frontmatter.title} description={frontmatter.description} backHref="/blog/" backLabel="Back to blog">
+  <article>
+    <slot />
+    {authorProfile && <AuthorBio profile={authorProfile.data} />}
+  </article>
+</SiteLayout>

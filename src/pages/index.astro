@@ -1,14 +1,96 @@
-<div style="display:flex; justify-content:space-evenly;">
-  <a href="/">Home</a>
-  <a href="/about/">About</a>
-  <a href="/blog/">Blog</a>
-</div>
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
 
-<body>
+<SiteLayout title="Home">
   <h1>My Astro Site</h1>
-
   <p>
-  This is my Astro Blog that i am uploading to my GitHub.<br>
-  Through this I am learning about how to stage Git commits, create branches and push to my personal GitHub.<br>
+    This is my Astro Blog that i am uploading to my GitHub.<br>
+    Through this I am learning about how to stage Git commits, create branches and push to my personal GitHub.<br>
   </p>
-</body>
+  <div class="home-sections">
+    <section class="home-section" aria-labelledby="latest-posts-heading">
+      <h2 id="latest-posts-heading">Latest Posts</h2>
+      <div class="section-links">
+        <a href="/posts/post-3/">My Third Blog Post</a>
+        <a href="/posts/post-2/">My Second Blog Post</a>
+        <a href="/posts/post-1/">My First Blog Post</a>
+      </div>
+    </section>
+    <section class="home-section" aria-labelledby="learning-heading">
+      <h2 id="learning-heading">Currently Learning</h2>
+      <p>Building with Astro, improving my development workflow, and exploring ways to make this site more interactive.</p>
+    </section>
+    <section class="home-section" aria-labelledby="about-blog-heading">
+      <h2 id="about-blog-heading">About This Blog</h2>
+      <p>A place to document projects, experiments, and what I learn along the way.</p>
+      <div class="section-links">
+        <a href="/about/">About me</a>
+        <a href="/blog/">Browse all posts</a>
+      </div>
+    </section>
+  </div>
+</SiteLayout>
+
+<style>
+  .home-sections {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 96rem;
+    min-height: clamp(22rem, 44vh, 34rem);
+    margin: clamp(3.5rem, 9vh, 7rem) auto 2rem;
+    padding-inline: clamp(1.5rem, 5vw, 5rem);
+    text-align: left;
+  }
+
+  .home-section {
+    border: 1px solid currentColor;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .home-section h2 {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .home-section p {
+    line-height: 1.6;
+  }
+
+  .section-links {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .section-links a {
+    display: block;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    background: color-mix(in srgb, currentColor 6%, transparent);
+    text-decoration: none;
+    transition: background-color 150ms ease, transform 150ms ease;
+  }
+
+  .section-links a:hover {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+    transform: translateX(3px);
+  }
+
+  .section-links a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 52rem) {
+    .home-sections {
+      grid-template-columns: 1fr;
+      max-width: 36rem;
+      min-height: 0;
+      margin-top: 3rem;
+    }
+  }
+</style>

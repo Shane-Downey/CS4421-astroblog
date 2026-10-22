@@ -1,16 +1,249 @@
-<div style="display:flex; justify-content:space-evenly;">
-  <a href="/">Home</a>
-  <a href="/about/">About</a>
-  <a href="/blog/">Blog</a>
-</div>
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
 
-<body>
+const postModules = import.meta.glob('./posts/*.md', { eager: true });
+const posts = Object.entries(postModules)
+  .map(([path, module]) => {
+    const { frontmatter } = module as {
+      frontmatter: { title: string; pubDate: Date | string };
+    };
+    const slug = path.split('/').at(-1)?.replace(/\.md$/, '') ?? '';
+    const pubDate = new Date(frontmatter.pubDate);
+
+    return {
+      title: frontmatter.title,
+      href: `/posts/${slug}/`,
+      pubDate,
+      dateTime: pubDate.toISOString().slice(0, 10),
+      dateLabel: pubDate.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC',
+      }),
+    };
+  })
+  .sort((first, second) => second.pubDate.getTime() - first.pubDate.getTime());
+---
+
+<SiteLayout title="Journal" description="A journal of projects, experiments, and lessons learned." backHref="/" backLabel="Back to main">
   <h1>My Blog Page</h1>
+  <div class="blog-columns">
+    <section class="posts-column" aria-labelledby="posts-heading">
+      <div class="posts-heading">
+        <h2 id="posts-heading">Posts</h2>
+        <button
+          class="sort-button"
+          id="sort-posts"
+          type="button"
+          aria-label="Sort posts from oldest to newest"
+          title="Sort posts from oldest to newest"
+        >↓</button>
+      </div>
+      <ul>
+        {posts.map((post) => (
+          <li data-pub-date={post.dateTime}>
+            <a href={post.href}>{post.title}</a>
+            <time datetime={post.dateTime}>{post.dateLabel}</time>
+          </li>
+        ))}
+      </ul>
+    </section>
 
-  <h2>Posts</h2>
-    <ul>
-      <li><a href="/posts/post-1/">Astro Example Post</a></li>
-      <li><a href="/posts/post-2/">What I had for Breakfast</a></li>
-      <li><a href="/posts/post-3/">Third Blog Post</a></li>
-    </ul>
-</body>
+    <section class="author-column" aria-label="Write a blog post">
+      <button
+        class="author-toggle"
+        id="author-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="post-draft"
+      >Write a note</button>
+      <div class="draft-area" id="post-draft" hidden>
+        <label for="post-content">Draft content</label>
+        <textarea id="post-content" placeholder="Write your post here..."></textarea>
+      </div>
+    </section>
+  </div>
+</SiteLayout>
+
+<style>
+  .blog-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    box-sizing: border-box;
+    padding-inline: clamp(1rem, 4vw, 4rem);
+  }
+
+  .posts-column {
+    min-width: 0;
+  }
+
+  .posts-column ul {
+    display: grid;
+    row-gap: 0.9rem;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+  }
+
+  .posts-heading {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+
+  .posts-column > .posts-heading {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .posts-heading h2 {
+    margin: 0.83em 0;
+  }
+
+  .sort-button {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 2rem;
+    padding: 0;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    background: color-mix(in srgb, currentColor 6%, transparent);
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .sort-button:hover {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+  }
+
+  .sort-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .author-column {
+    min-width: 0;
+    padding-top: 1.25rem;
+    text-align: left;
+  }
+
+  .author-toggle {
+    padding: 0.8rem 1.1rem;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    background: color-mix(in srgb, currentColor 8%, transparent);
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .author-toggle:hover {
+    background: color-mix(in srgb, currentColor 14%, transparent);
+  }
+
+  .author-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .draft-area {
+    margin-top: 1rem;
+  }
+
+  .draft-area label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .draft-area textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 28rem;
+    padding: 1rem;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    background: color-mix(in srgb, currentColor 3%, transparent);
+    color: inherit;
+    font: inherit;
+    line-height: 1.6;
+    resize: vertical;
+  }
+
+  .draft-area textarea:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .posts-column li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 7.5rem;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .posts-column time {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 48rem) {
+    .blog-columns {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    .author-column {
+      padding-top: 0;
+    }
+  }
+</style>
+
+<script>
+  const sortButton = document.querySelector<HTMLButtonElement>('#sort-posts');
+  const postList = document.querySelector('.posts-column ul');
+  const authorToggle = document.querySelector<HTMLButtonElement>('#author-toggle');
+  const draftArea = document.querySelector<HTMLDivElement>('#post-draft');
+  const postContent = document.querySelector<HTMLTextAreaElement>('#post-content');
+
+  authorToggle?.addEventListener('click', () => {
+    if (!draftArea) return;
+
+    const isOpening = draftArea.hidden;
+    draftArea.hidden = !isOpening;
+    authorToggle.setAttribute('aria-expanded', String(isOpening));
+    if (isOpening) postContent?.focus();
+  });
+
+  sortButton?.addEventListener('click', () => {
+    if (!postList) return;
+
+    const ascending = sortButton.dataset.order !== 'asc';
+    const postRows = Array.from(postList.querySelectorAll('li'));
+    postRows.sort((first, second) => {
+      const firstDate = first.dataset.pubDate ?? '';
+      const secondDate = second.dataset.pubDate ?? '';
+      return ascending
+        ? firstDate.localeCompare(secondDate)
+        : secondDate.localeCompare(firstDate);
+    });
+
+    postRows.forEach((row) => postList.append(row));
+    sortButton.dataset.order = ascending ? 'asc' : 'desc';
+    sortButton.textContent = ascending ? '↑' : '↓';
+    const sortLabel = `Sort posts from ${ascending ? 'newest to oldest' : 'oldest to newest'}`;
+    sortButton.setAttribute('aria-label', sortLabel);
+    sortButton.title = sortLabel;
+  });
+</script>

@@ -1,0 +1,14 @@
+h1 {
+	text-align: center;
+}
+
+main {
+	text-align: center;
+}
+
+main ul,
+main ol {
+	width: fit-content;
+	margin-inline: auto;
+	text-align: left;
+}

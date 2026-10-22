@@ -1,16 +1,13 @@
-<div style="display:flex; justify-content:space-evenly;">
-  <a href="/">Home</a>
-  <a href="/about/">About</a>
-  <a href="/blog/">Blog</a>
-</div>
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
 
-<body>
+<SiteLayout title="Journal" description="A journal of projects, experiments, and lessons learned." current="blog">
   <h1>My Blog Page</h1>
-
   <h2>Posts</h2>
-    <ul>
-      <li><a href="/posts/post-1/">Astro Example Post</a></li>
-      <li><a href="/posts/post-2/">What I had for Breakfast</a></li>
-      <li><a href="/posts/post-3/">Third Blog Post</a></li>
-    </ul>
-</body>
+  <ul>
+    <li><a href="/posts/post-1/">Astro Example Post</a></li>
+    <li><a href="/posts/post-2/">What I had for Breakfast</a></li>
+    <li><a href="/posts/post-3/">Third Blog Post</a></li>
+  </ul>
+</SiteLayout>

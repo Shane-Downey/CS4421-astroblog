@@ -1,0 +1,29 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  current?: 'home' | 'about' | 'blog';
+}
+
+const { title, description = 'Shane Downey’s blog.', current } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title} | Shane Downey</title>
+  </head>
+  <body>
+    <div aria-label="Main navigation" style="display:flex; justify-content:space-evenly">
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/blog/">Blog</a>
+    </div>
+    <main><slot /></main>
+  </body>
+</html>

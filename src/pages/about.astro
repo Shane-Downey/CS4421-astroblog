@@ -1,13 +1,10 @@
-<div style="display:flex; justify-content:space-evenly;">
-  <a href="/">Home</a>
-  <a href="/about/">About</a>
-  <a href="/blog/">Blog</a>
-</div>
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
 
-<body>
+<SiteLayout title="About" description="A little about Shane Downey and this blog." current="about">
   <h1>My About Page</h1>
-
   <p>
-  My name is Shane Downey, first year student in Immersive Software Engineering at University of Limerick.<br>
+    My name is Shane Downey, first year student in Immersive Software Engineering at University of Limerick.<br>
   </p>
-</body>
+</SiteLayout>

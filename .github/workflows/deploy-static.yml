@@ -1,7 +1,7 @@
 name: Deploy Static Site via AWS CDK
 
 on:
-	push:
+	pull_request:
 		branches: [main]
 
 permissions:

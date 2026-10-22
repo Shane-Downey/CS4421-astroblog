@@ -1,7 +1,7 @@
 ---
 layout: '../../layouts/BlogPost.astro'
 title: 'My Fourth Blog Post'
-pubDate: 2026-10-22 
+pubDate: 2026-10-22
 description: 'This is the fourth post of my new Astro blog.'
 author: 'Shane Downey'
 ---

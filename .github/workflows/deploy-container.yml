@@ -24,10 +24,18 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/astro-blog:$IMAGE_TAG .
           docker push $ECR_REGISTRY/astro-blog:$IMAGE_TAG
-      - name: Deploy Amazon ECS task definition
+      - name: Render ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ecs-task-definition.json
+          container-name: astro-blog
+          image: ${{ steps.login-ecr.outputs.registry }}/astro-blog:${{ github.sha }}
+
+      - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
+          cluster: astro-blog
+          service: astro-blog
           wait-for-service-stability: true

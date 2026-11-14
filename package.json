@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@astrojs/node": "^11.1.9",
-    "astro": "^7.3.2",
+    "astro": "^7.4.12",
     "jiti": "^2.7.0",
     "vitest": "^5.0.5"
   },
